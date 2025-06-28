@@ -28,3 +28,9 @@ It is a basic food ordering web application created for academic purposes.
 ## Developer Notes
 
 All code was written and customized independently for learning purposes.
+
+Demo :
+## Video Demo
+
+Google Drive Link to Project Demo:  
+https://drive.google.com/file/d/14JhFnD4RjPEjNxNm1iyE1FymLBlspXlm/view?usp=drive_link
