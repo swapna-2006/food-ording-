@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - SWATHI's FOODS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-emoji">🍛</span>
+                <h1>SWATHI's FOODS</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link">Browse Food</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="register.html" class="nav-link active">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Registration Form -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-card">
+                <h1>Create Account</h1>
+                <p class="auth-subtitle">Join SWATHI's FOODS as Customer or Restaurant</p>
+                
+                <form id="registerForm" class="auth-form">
+                    <!-- Basic Information -->
+                    <div class="form-group">
+                        <label for="username">Username *</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+
+                    <!-- User Type Selection -->
+                    <div class="form-group">
+                        <label for="userType">I want to register as *</label>
+                        <select id="userType" name="userType" required>
+                            <option value="">Select User Type</option>
+                            <option value="customer">Customer (Order Food)</option>
+                            <option value="restaurant">Restaurant Owner (Sell Food)</option>
+                        </select>
+                    </div>
+
+                    <!-- Restaurant Details (Hidden by default) -->
+                    <div id="restaurantDetails" class="restaurant-details" style="display: none;">
+                        <h3>Restaurant Information</h3>
+                        
+                        <div class="form-group">
+                            <label for="restaurantName">Restaurant Name *</label>
+                            <input type="text" id="restaurantName" name="restaurantName">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="restaurantAddress">Restaurant Address *</label>
+                            <textarea id="restaurantAddress" name="restaurantAddress" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="restaurantPhone">Restaurant Phone *</label>
+                            <input type="tel" id="restaurantPhone" name="restaurantPhone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="restaurantImage">Restaurant Image URL</label>
+                            <input type="url" id="restaurantImage" name="restaurantImage" placeholder="https://example.com/image.jpg">
+                            <small>Provide a URL to your restaurant's image</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cuisineType">Cuisine Type *</label>
+                            <select id="cuisineType" name="cuisineType">
+                                <option value="">Select Cuisine</option>
+                                <option value="indian">Indian</option>
+                                <option value="chinese">Chinese</option>
+                                <option value="italian">Italian</option>
+                                <option value="fast-food">Fast Food</option>
+                                <option value="beverages">Beverages</option>
+                                <option value="desserts">Desserts</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="auth-button">Create Account</button>
+                </form>
+
+                <div class="auth-links">
+                    <p>Already have an account? <a href="login.html">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userTypeSelect = document.getElementById('userType');
+            const restaurantDetails = document.getElementById('restaurantDetails');
+            const registerForm = document.getElementById('registerForm');
+
+            // Show/hide restaurant details based on user type
+            userTypeSelect.addEventListener('change', function() {
+                if (this.value === 'restaurant') {
+                    restaurantDetails.style.display = 'block';
+                    // Make restaurant fields required
+                    document.getElementById('restaurantName').required = true;
+                    document.getElementById('restaurantAddress').required = true;
+                    document.getElementById('restaurantPhone').required = true;
+                    document.getElementById('cuisineType').required = true;
+                } else {
+                    restaurantDetails.style.display = 'none';
+                    // Remove required from restaurant fields
+                    document.getElementById('restaurantName').required = false;
+                    document.getElementById('restaurantAddress').required = false;
+                    document.getElementById('restaurantPhone').required = false;
+                    document.getElementById('cuisineType').required = false;
+                }
+            });
+
+            // Handle form submission
+            registerForm.addEventListener('submit', handleRegister);
+        });
+    </script>
+</body>
+</html>

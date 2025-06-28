@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - SWATHI's FOODS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-emoji">🍛</span>
+                <h1>SWATHI's FOODS</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link">Browse Food</a>
+                <a href="cart.html" class="nav-link">Cart</a>
+                <span id="userWelcome" class="welcome-text">Welcome, User</span>
+                <button onclick="logout()" class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <h1>Checkout</h1>
+            
+            <div class="checkout-container">
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    <div id="orderItems" class="order-items">
+                        <!-- Items will be loaded here -->
+                    </div>
+                    <div class="order-total">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">₹0</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Delivery Fee:</span>
+                            <span id="deliveryFee">₹40</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax (5%):</span>
+                            <span id="tax">₹0</span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span>Grand Total:</span>
+                            <span id="grandTotal">₹0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkout Form -->
+                <div class="checkout-form">
+                    <h2>Delivery Details</h2>
+                    <form id="checkoutForm">
+                        <div class="form-group">
+                            <label for="customerName">Full Name *</label>
+                            <input type="text" id="customerName" name="customerName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customerEmail">Email Address *</label>
+                            <input type="email" id="customerEmail" name="customerEmail" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customerMobile">Mobile Number *</label>
+                            <input type="tel" id="customerMobile" name="customerMobile" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customerAddress">Delivery Address *</label>
+                            <textarea id="customerAddress" name="customerAddress" rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customerPincode">Pincode *</label>
+                            <input type="text" id="customerPincode" name="customerPincode" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customerLandmark">Landmark (Optional)</label>
+                            <input type="text" id="customerLandmark" name="customerLandmark">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method *</label>
+                            <select id="paymentMethod" name="paymentMethod" required>
+                                <option value="">Select Payment Method</option>
+                                <option value="cash">Cash on Delivery</option>
+                                <option value="upi">UPI Payment</option>
+                                <option value="card">Credit/Debit Card</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="specialInstructions">Special Instructions (Optional)</label>
+                            <textarea id="specialInstructions" name="specialInstructions" rows="2" placeholder="Any special instructions for delivery..."></textarea>
+                        </div>
+
+                        <button type="submit" class="place-order-btn">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/checkout.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const currentUser = getCurrentUser();
+            if (!currentUser || currentUser.userType !== 'customer') {
+                showToast('Access Denied', 'Please login as customer to checkout', 'error');
+                setTimeout(() => window.location.href = 'login.html', 1500);
+                return;
+            }
+
+            // Load checkout page
+            loadCheckoutPage();
+            updateUserWelcome();
+        });
+    </script>
+</body>
+</html>

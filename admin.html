@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SWATHI's FOODS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-emoji">🍛</span>
+                <h1>SWATHI's FOODS - Admin</h1>
+            </div>
+            <div class="nav-links">
+                <span id="adminWelcome" class="welcome-text">Welcome, Admin</span>
+                <button onclick="logout()" class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard -->
+    <section class="dashboard-section">
+        <div class="container">
+            <h1>Admin Dashboard</h1>
+            
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏪</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalRestaurants">0</div>
+                        <div class="stat-label">Active Restaurants</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalOrders">0</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="pendingApprovals">0</div>
+                        <div class="stat-label">Pending Approvals</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Restaurant Approval Section -->
+            <div class="admin-section">
+                <h2>Restaurant Approval Requests</h2>
+                <div id="approvalRequests" class="approval-requests">
+                    <!-- Approval requests will be loaded here -->
+                </div>
+            </div>
+
+            <!-- All Users Section -->
+            <div class="admin-section">
+                <h2>All Users</h2>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>User Type</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Orders Section -->
+            <div class="admin-section">
+                <h2>Recent Orders</h2>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Restaurant</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTable">
+                            <!-- Orders will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is admin
+            const currentUser = getCurrentUser();
+            if (!currentUser || currentUser.userType !== 'admin') {
+                showToast('Access Denied', 'Admin access required', 'error');
+                setTimeout(() => window.location.href = 'login.html', 1500);
+                return;
+            }
+
+            // Load admin dashboard
+            loadAdminDashboard();
+        });
+    </script>
+</body>
+</html>

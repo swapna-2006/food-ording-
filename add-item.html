@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Food Item - SWATHI's FOODS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-emoji">🍛</span>
+                <h1>SWATHI's FOODS</h1>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="products.html?my-items=true" class="nav-link">My Items</a>
+                <button onclick="logout()" class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Add Item Form -->
+    <section class="form-section">
+        <div class="container">
+            <div class="form-card">
+                <h1>Add New Food Item</h1>
+                <p class="form-subtitle">Add a delicious item to your menu</p>
+                
+                <form id="addItemForm" class="item-form">
+                    <!-- Basic Information -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemName">Item Name *</label>
+                            <input type="text" id="itemName" name="itemName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="itemPrice">Price (₹) *</label>
+                            <input type="number" id="itemPrice" name="itemPrice" min="1" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemDescription">Description *</label>
+                        <textarea id="itemDescription" name="itemDescription" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemImage">Item Image URL</label>
+                        <input type="url" id="itemImage" name="itemImage" placeholder="https://example.com/image.jpg">
+                        <small>Provide a URL to your food item's image</small>
+                    </div>
+
+                    <!-- Classification -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemType">Food Type *</label>
+                            <select id="itemType" name="itemType" required>
+                                <option value="">Select Type</option>
+                                <option value="veg">🥬 Vegetarian</option>
+                                <option value="non-veg">🍖 Non-Vegetarian</option>
+                                <option value="vegan">🌱 Vegan</option>
+                                <option value="beverage">🥤 Beverage</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="itemCategory">Category *</label>
+                            <select id="itemCategory" name="itemCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="biryani">Biryani</option>
+                                <option value="tiffin">Tiffin Items</option>
+                                <option value="rice">Rice Items</option>
+                                <option value="curry">Curries</option>
+                                <option value="snacks">Snacks</option>
+                                <option value="beverages">Beverages</option>
+                                <option value="desserts">Desserts</option>
+                                <option value="chinese">Chinese</option>
+                                <option value="fast-food">Fast Food</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Custom Category -->
+                    <div id="customCategoryGroup" class="form-group" style="display: none;">
+                        <label for="customCategory">Custom Category Name *</label>
+                        <input type="text" id="customCategory" name="customCategory">
+                    </div>
+
+                    <!-- Pricing -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="discount">Discount (%) </label>
+                            <input type="number" id="discount" name="discount" min="0" max="100" step="1" value="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="availability">Availability *</label>
+                            <select id="availability" name="availability" required>
+                                <option value="available">Available</option>
+                                <option value="out-of-stock">Out of Stock</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Additional Details -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="preparationTime">Preparation Time (minutes)</label>
+                            <input type="number" id="preparationTime" name="preparationTime" min="5" max="120" value="30">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="spiceLevel">Spice Level</label>
+                            <select id="spiceLevel" name="spiceLevel">
+                                <option value="mild">🌶️ Mild</option>
+                                <option value="medium">🌶️🌶️ Medium</option>
+                                <option value="hot">🌶️🌶️🌶️ Hot</option>
+                                <option value="very-hot">🌶️🌶️🌶️🌶️ Very Hot</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" onclick="goBack()" class="btn-secondary">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/restaurant.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is restaurant owner
+            const currentUser = getCurrentUser();
+            if (!currentUser || currentUser.userType !== 'restaurant' || !currentUser.approved) {
+                showToast('Access Denied', 'Restaurant access required', 'error');
+                setTimeout(() => window.location.href = 'login.html', 1500);
+                return;
+            }
+
+            const addItemForm = document.getElementById('addItemForm');
+            const categorySelect = document.getElementById('itemCategory');
+            const customCategoryGroup = document.getElementById('customCategoryGroup');
+
+            // Show/hide custom category field
+            categorySelect.addEventListener('change', function() {
+                if (this.value === 'other') {
+                    customCategoryGroup.style.display = 'block';
+                    document.getElementById('customCategory').required = true;
+                } else {
+                    customCategoryGroup.style.display = 'none';
+                    document.getElementById('customCategory').required = false;
+                }
+            });
+
+            // Handle form submission
+            addItemForm.addEventListener('submit', handleAddItem);
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

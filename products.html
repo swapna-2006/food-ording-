@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Food - SWATHI's FOODS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-emoji">🍛</span>
+                <h1>SWATHI's FOODS</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link active">Browse Food</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="register.html" class="nav-link">Register</a>
+                <a href="cart.html" class="nav-link">
+                    Cart <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <h1>Browse Our Massive Menu</h1>
+            
+            <!-- Search and Filters -->
+            <div class="search-filters">
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search for dishes, restaurants...">
+                </div>
+                
+                <div class="filters-container">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="biryani">Biryani</option>
+                        <option value="tiffin">Tiffin Items</option>
+                        <option value="rice">Rice Items</option>
+                        <option value="noodles">Noodles</option>
+                        <option value="curry">Curries</option>
+                        <option value="bread">Bread & Roti</option>
+                        <option value="chinese">Chinese</option>
+                        <option value="snacks">Snacks</option>
+                        <option value="beverages">Beverages</option>
+                        <option value="desserts">Desserts</option>
+                    </select>
+                    
+                    <select id="typeFilter" class="filter-select">
+                        <option value="">All Types</option>
+                        <option value="veg">Vegetarian</option>
+                        <option value="non-veg">Non-Vegetarian</option>
+                        <option value="beverage">Beverages</option>
+                    </select>
+                    
+                    <select id="sortFilter" class="filter-select">
+                        <option value="name">Sort by Name</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="discount">Highest Discount</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Featured Categories -->
+            <div class="featured-categories">
+                <h2>Popular Categories</h2>
+                <div class="category-grid">
+                    <div class="category-card" onclick="filterByCategory('biryani')">
+                        <span class="category-icon">🍛</span>
+                        <span class="category-name">Biryani</span>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('tiffin')">
+                        <span class="category-icon">🥞</span>
+                        <span class="category-name">South Indian</span>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('curry')">
+                        <span class="category-icon">🍛</span>
+                        <span class="category-name">Curries</span>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('snacks')">
+                        <span class="category-icon">🍟</span>
+                        <span class="category-name">Snacks</span>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('beverages')">
+                        <span class="category-icon">🥤</span>
+                        <span class="category-name">Beverages</span>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('desserts')">
+                        <span class="category-icon">🍰</span>
+                        <span class="category-name">Desserts</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="productsGrid" class="products-grid">
+                <!-- Products will be loaded here -->
+            </div>
+
+            <!-- No Results Message -->
+            <div id="noResults" class="no-results" style="display: none;">
+                <h3>No items found</h3>
+                <p>Try adjusting your search or filters</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/product.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProducts();
+            updateCartCount();
+            
+            // Add event listeners for search and filters
+            document.getElementById('searchInput').addEventListener('input', debounce(filterProducts, 300));
+            document.getElementById('categoryFilter').addEventListener('change', filterProducts);
+            document.getElementById('typeFilter').addEventListener('change', filterProducts);
+            document.getElementById('sortFilter').addEventListener('change', filterProducts);
+        });
+
+        function filterByCategory(category) {
+            document.getElementById('categoryFilter').value = category;
+            filterProducts();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWATHI's FOODS - Advanced Food Ordering Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-emoji">🍛</span>
+                <h1>SWATHI's FOODS</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="products.html" class="nav-link">Browse Food</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="register.html" class="nav-link">Register</a>
+                <a href="cart.html" class="nav-link">
+                    Cart <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to SWATHI's FOODS</h1>
+            <p>Multi-Role Food Ordering Platform</p>
+            <p class="hero-subtitle">Order as Customer • Manage as Restaurant • Control as Admin</p>
+            <div class="hero-buttons">
+                <a href="register.html" class="cta-button primary">Get Started</a>
+                <a href="products.html" class="cta-button secondary">Browse Food</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Platform Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍🍳</div>
+                    <h3>For Restaurants</h3>
+                    <p>Register your restaurant, add menu items, manage orders and track your business</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🍽️</div>
+                    <h3>For Customers</h3>
+                    <p>Browse restaurants, order delicious food, track deliveries and enjoy great meals</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Admin Control</h3>
+                    <p>Approve restaurants, monitor platform activity, and manage the entire system</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <h2>Platform Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalUsers">0</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalRestaurants">0</div>
+                    <div class="stat-label">Restaurants</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalOrders">0</div>
+                    <div class="stat-label">Orders Placed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalProducts">0</div>
+                    <div class="stat-label">Food Items</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Items Preview -->
+    <section class="popular-items">
+        <div class="container">
+            <h2>Popular Categories</h2>
+            <div class="categories-preview">
+                <div class="category-card">
+                    <div class="category-image">🍛</div>
+                    <h3>Biryani</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">🥞</div>
+                    <h3>Tiffin Items</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">🍲</div>
+                    <h3>Rice Items</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">🍛</div>
+                    <h3>Curries</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 SWATHI's FOODS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script>
+        // Update stats on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateHomeStats();
+            updateCartCount();
+        });
+
+        function updateHomeStats() {
+            const users = getFromStorage('users', []);
+            const restaurants = users.filter(u => u.userType === 'restaurant' && u.approved);
+            const orders = getFromStorage('orders', []);
+            const products = getFromStorage('products', []);
+
+            document.getElementById('totalUsers').textContent = users.length;
+            document.getElementById('totalRestaurants').textContent = restaurants.length;
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('totalProducts').textContent = products.length;
+        }
+    </script>
+</body>
+</html>
