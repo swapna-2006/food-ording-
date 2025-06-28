@@ -1,7 +1,7 @@
 # Kosuri Swapna's Project
 
 ## 📌 Project Information  
-**Live Project URL**: [Click to Open](https://lovable.dev/projects/242c1208-fcf4-4f97-9699-bbc91b4f3dbd)  
+**Live Project URL**: [Click to Open](https://swapna-2006.github.io/food-ording-/)  
 **Project Stack**: Vite + React + TypeScript + Tailwind CSS + shadcn/ui  
 
 ---
